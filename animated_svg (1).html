@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+  </style>
+</head>
+<body>
+<!-- STITCH_SVG_START:ANIMATION_81 class="fixed inset-0 w-full h-full" --><div class="fixed inset-0 w-full h-full" id="animated-svg-ANIMATION_81" style="display:block;"><svg viewbox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+<style>
+    .circle { stroke: #22C55E; stroke-width: 4; fill: none; stroke-dasharray: 628; stroke-dashoffset: 628; transform-origin: center; transform: rotate(-90deg); animation: progress 2s linear infinite; }
+    .pulse { fill: #22C55E; opacity: 0.3; animation: pulse 1.5s ease-out infinite; }
+    @keyframes progress { 0% { stroke-dashoffset: 628; } 100% { stroke-dashoffset: 0; } }
+    @keyframes pulse { 0% { r: 10; opacity: 0.6; } 100% { r: 50; opacity: 0; } }
+  </style>
+<circle class="pulse" cx="100" cy="100" r="30"></circle>
+<circle class="circle" cx="100" cy="100" r="80"></circle>
+<path d="M100,60 L140,140 L60,140 Z" fill="#22C55E" opacity="0.8">
+<animatetransform attributename="transform" dur="3s" from="0 100 100" repeatcount="indefinite" to="360 100 100" type="rotate"></animatetransform>
+</path>
+</svg></div><!-- STITCH_SVG_END:ANIMATION_81 -->
+</body>
+</html>

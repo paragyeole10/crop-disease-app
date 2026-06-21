@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AgriVision AI - Disease Analysis</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-surface": "#263143",
+                        "surface-tint": "#006e2f",
+                        "outline": "#6d7b6c",
+                        "on-tertiary-fixed-variant": "#004395",
+                        "tertiary-fixed-dim": "#adc6ff",
+                        "on-primary-fixed": "#002109",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "surface-container-highest": "#d8e3fb",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#006e2f",
+                        "surface-dim": "#cfdaf2",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#d8e3fb",
+                        "outline-variant": "#bccbb9",
+                        "surface-bright": "#f9f9ff",
+                        "primary-container": "#22c55e",
+                        "on-primary-fixed-variant": "#005321",
+                        "on-error-container": "#93000a",
+                        "secondary": "#5d5f5f",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#004b1e",
+                        "on-secondary-container": "#616363",
+                        "primary-fixed": "#6bff8f",
+                        "tertiary-container": "#82abff",
+                        "primary-fixed-dim": "#4ae176",
+                        "inverse-on-surface": "#ecf1ff",
+                        "tertiary": "#005ac2",
+                        "secondary-container": "#dfe0e0",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#454747",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#e7eeff",
+                        "on-surface-variant": "#3d4a3d",
+                        "surface-container-high": "#dee8ff",
+                        "surface-container-low": "#f0f3ff",
+                        "surface": "#f9f9ff",
+                        "background": "#f9f9ff",
+                        "on-surface": "#111c2d",
+                        "on-background": "#111c2d",
+                        "on-tertiary-container": "#003d88",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#d8e2ff",
+                        "inverse-primary": "#4ae176",
+                        "on-tertiary-fixed": "#001a42"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "40px",
+                        "gutter": "16px",
+                        "base": "4px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "container-margin": "20px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "caption": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "title-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "caption": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { background-color: #f9f9ff; -webkit-tap-highlight-color: transparent; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar { display: none; }
+        .custom-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .status-bar-red { height: 4px; background: #ba1a1a; width: 100%; position: absolute; top: 0; left: 0; }
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(8px); border: 1px solid #E2E8F0; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-on-background">
+<!-- Top AppBar -->
+<header class="w-full top-0 sticky z-50 bg-surface border-b border-outline-variant flex items-center justify-between px-container-margin py-sm">
+<div class="flex items-center gap-md">
+<button class="w-12 h-12 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-title-md text-title-md text-on-surface">Analysis Results</h1>
+</div>
+<div class="flex items-center gap-xs">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">translate</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">more_vert</span>
+</button>
+</div>
+</header>
+<main class="pb-32 max-w-2xl mx-auto px-container-margin pt-lg space-y-lg">
+<!-- Primary Disease Card -->
+<section class="relative overflow-hidden rounded-xl bg-surface border border-outline-variant shadow-sm">
+<div class="status-bar-red"></div>
+<div class="p-md pt-lg">
+<div class="flex justify-between items-start mb-sm">
+<div>
+<span class="font-label-md text-label-md text-on-surface-variant">Detected Condition</span>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-xs">Bacterial Leaf Blight</h2>
+<div class="flex items-center gap-xs text-primary font-label-md">
+<span class="material-symbols-outlined text-[18px]">spa</span>
+<span>Affected Crop: Rice</span>
+</div>
+</div>
+<div class="bg-error-container text-on-error-container px-md py-xs rounded-full font-label-md flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+                        Critical
+                    </div>
+</div>
+<div class="mt-lg space-y-sm">
+<div class="flex justify-between items-center font-label-md">
+<span class="text-on-surface-variant">AI Confidence Score</span>
+<span class="text-primary">94%</span>
+</div>
+<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[94%] rounded-full"></div>
+</div>
+</div>
+<div class="mt-lg flex gap-md">
+<button class="flex-1 bg-surface-container text-on-surface-variant rounded-xl py-sm flex flex-col items-center gap-base hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">bookmark</span>
+<span class="text-caption font-caption">Save</span>
+</button>
+<button class="flex-1 bg-surface-container text-on-surface-variant rounded-xl py-sm flex flex-col items-center gap-base hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">share</span>
+<span class="text-caption font-caption">Share</span>
+</button>
+<button class="flex-1 bg-primary text-on-primary rounded-xl py-sm flex flex-col items-center gap-base hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">volume_up</span>
+<span class="text-caption font-caption">Listen</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Symptoms Section -->
+<section class="space-y-md">
+<h3 class="font-title-md text-title-md text-on-surface px-base">Key Symptoms</h3>
+<div class="bg-white rounded-xl border border-outline-variant p-md space-y-md">
+<div class="flex gap-md items-start">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant">visibility</span>
+</div>
+<ul class="space-y-sm">
+<li class="flex items-start gap-sm">
+<span class="mt-1 w-1.5 h-1.5 rounded-full bg-error shrink-0"></span>
+<span class="text-body-md font-body-md text-on-surface-variant">Yellowing at leaf tips or edges progressing to large dead patches.</span>
+</li>
+<li class="flex items-start gap-sm">
+<span class="mt-1 w-1.5 h-1.5 rounded-full bg-error shrink-0"></span>
+<span class="text-body-md font-body-md text-on-surface-variant">Bacterial ooze (pale yellow droplets) appearing on leaf surfaces.</span>
+</li>
+<li class="flex items-start gap-sm">
+<span class="mt-1 w-1.5 h-1.5 rounded-full bg-error shrink-0"></span>
+<span class="text-body-md font-body-md text-on-surface-variant">Wilting of young plants (Kresek stage) causing rapid death.</span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Treatment Guidance -->
+<section class="space-y-md">
+<div class="flex justify-between items-center px-base">
+<h3 class="font-title-md text-title-md text-on-surface">Treatment Steps</h3>
+<span class="text-primary font-label-md text-label-md">3 Steps</span>
+</div>
+<div class="space-y-sm">
+<!-- Step 1 -->
+<div class="bg-white rounded-xl border border-outline-variant p-md flex gap-md items-center">
+<div class="w-12 h-12 rounded-xl bg-primary-container/20 text-primary flex items-center justify-center shrink-0 font-bold">1</div>
+<div class="flex-1">
+<h4 class="font-label-md text-label-md text-on-surface">Immediate Isolation</h4>
+<p class="text-caption font-caption text-on-surface-variant">Drain standing water from the affected field immediately.</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+<!-- Step 2 -->
+<div class="bg-white rounded-xl border border-outline-variant p-md flex gap-md items-center">
+<div class="w-12 h-12 rounded-xl bg-primary-container/20 text-primary flex items-center justify-center shrink-0 font-bold">2</div>
+<div class="flex-1">
+<h4 class="font-label-md text-label-md text-on-surface">Copper-based Spray</h4>
+<p class="text-caption font-caption text-on-surface-variant">Apply recommended bactericide at 10-day intervals.</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+<!-- Step 3 -->
+<div class="bg-white rounded-xl border border-outline-variant p-md flex gap-md items-center">
+<div class="w-12 h-12 rounded-xl bg-primary-container/20 text-primary flex items-center justify-center shrink-0 font-bold">3</div>
+<div class="flex-1">
+<h4 class="font-label-md text-label-md text-on-surface">Balanced Nutrition</h4>
+<p class="text-caption font-caption text-on-surface-variant">Avoid excess Nitrogen; supplement with Potassium.</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- Prevention Checklist -->
+<section class="space-y-md">
+<h3 class="font-title-md text-title-md text-on-surface px-base">Prevention Plan</h3>
+<div class="bg-surface-container-low rounded-2xl p-md space-y-md">
+<label class="flex items-center gap-md p-sm bg-white rounded-xl border border-outline-variant cursor-pointer">
+<input class="w-6 h-6 rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-label-md text-label-md text-on-surface">Use certified resistant varieties (IR-series)</span>
+</label>
+<label class="flex items-center gap-md p-sm bg-white rounded-xl border border-outline-variant cursor-pointer">
+<input class="w-6 h-6 rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-label-md text-label-md text-on-surface">Ensure proper drainage systems</span>
+</label>
+<label class="flex items-center gap-md p-sm bg-white rounded-xl border border-outline-variant cursor-pointer">
+<input class="w-6 h-6 rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-label-md text-label-md text-on-surface">Clean equipment before field transfer</span>
+</label>
+</div>
+</section>
+<!-- Recommended Products -->
+<section class="space-y-md overflow-hidden">
+<h3 class="font-title-md text-title-md text-on-surface px-base">Recommended Solutions</h3>
+<div class="flex gap-md overflow-x-auto custom-scrollbar -mx-container-margin px-container-margin pb-4">
+<!-- Product 1 -->
+<div class="min-w-[180px] bg-white rounded-xl border border-outline-variant overflow-hidden flex flex-col">
+<div class="h-32 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A professional product photography shot of a high-quality agricultural bactericide bottle. The packaging is clean, featuring green and white accents, labeled for crop protection. It is set against a soft, bright agricultural laboratory background with natural sunlight. The image conveys trust and clinical precision in modern farming." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8cvcMgEOJs6cgtoDU4xN5l89nwdwToF69OnW5q0ouR5VUmTuuGZc7RHfWsXhG6L0sErsshJlUBthpIGKveuGwzN37K-8w767DKWGPQdz0sa-3x8HAgPjQAUvOVzD0BFMqKgklcPi4wQLEkkAWY6vr7BKf8f2eT1ogxvshjSOdoeOYjBzwflmLPgauPmzXa28UT5yWC5APV2qd7azbUCxJAd57WqDajuGWWzY5cePpaKpd-0OKdwzSka2qyQ3AzXXppHoQ42Jy1iw"/>
+</div>
+<div class="p-sm flex flex-col flex-1">
+<h5 class="font-label-md text-label-md text-on-surface line-clamp-1">Copper Shield 50</h5>
+<p class="text-caption font-caption text-primary mb-sm">₹849.00</p>
+<button class="w-full py-xs border border-primary text-primary rounded-lg font-label-md text-[12px] hover:bg-primary-container/10 transition-colors">Buy Now</button>
+</div>
+</div>
+<!-- Product 2 -->
+<div class="min-w-[180px] bg-white rounded-xl border border-outline-variant overflow-hidden flex flex-col">
+<div class="h-32 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A macro photograph of premium organic potassium fertilizer granules being poured from a minimalist sack. The lighting is warm and natural, emphasizing the texture of the soil-enriching minerals. The composition is clean and centered, suitable for a premium agricultural supply catalog with a focus on vital crop health." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlxVM7lEgh3K1UbbDH-66rSHZ52p28wb9VjVXtliPD9hIRgDVvuElzRlC6qFq8JyBq_S7ATDEepFswYDS5LMW3OrnKR2RlVwju2gChGH6_LEYvg9EGBRx8MkoGZItRuS1D0x2NyKDobhi5YeL8SRd53eDJiOiS8478ofk1QUkYbGAthd4srIBcxyFcVD8bmdR1quvCK_oEoBHFR5XdSJxwOfA91AuDDCL76lJI3MEERR-iD-y8G5EQ73c2Y4cBV1J1fTSqrB6oFTM"/>
+</div>
+<div class="p-sm flex flex-col flex-1">
+<h5 class="font-label-md text-label-md text-on-surface line-clamp-1">Potash Max Boost</h5>
+<p class="text-caption font-caption text-primary mb-sm">₹1,299.00</p>
+<button class="w-full py-xs border border-primary text-primary rounded-lg font-label-md text-[12px] hover:bg-primary-container/10 transition-colors">Buy Now</button>
+</div>
+</div>
+<!-- Product 3 -->
+<div class="min-w-[180px] bg-white rounded-xl border border-outline-variant overflow-hidden flex flex-col">
+<div class="h-32 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A close-up of a specialized hand-held field sprayer for precise fungicide application. The device is modern, ergonomic, and constructed from high-durability green polymers. It rests on a wooden bench with a lush, out-of-focus rice field in the background. The mood is professional and ready for efficient farm management." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRijtUgtPIxCCtyzbPpEV0LsplRbXasf6y8iOYSsSmP18DfJOpa7t9UIAByiaN3kuDUbIOifdjNo3U5T5Otg--_GRJxBOK4GxxpkAP-S4kb_SwsOTeySLdK3EstdYBOBEtNS9gqSeL0_JfHJ8pyR6TlqY1eruVFUTVYZgdGsyMm7hm4_7dpV3AWCzlk_PojsvP3LY5ChFUclmgfKk9BQ-WqwAFKJOC6kKjs9o2KzEDR0nFupJ_PdGzSVHSzuJNmbCfVcslcL06lEw"/>
+</div>
+<div class="p-sm flex flex-col flex-1">
+<h5 class="font-label-md text-label-md text-on-surface line-clamp-1">Precision Sprayer</h5>
+<p class="text-caption font-caption text-primary mb-sm">₹2,450.00</p>
+<button class="w-full py-xs border border-primary text-primary rounded-lg font-label-md text-[12px] hover:bg-primary-container/10 transition-colors">Buy Now</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom NavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-2 bg-surface border-t border-outline-variant">
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-md py-xs">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-md py-xs">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">document_scanner</span>
+<span class="font-label-md text-label-md">Scan</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-md py-xs">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-md text-label-md">History</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-md py-xs">
+<span class="material-symbols-outlined">mic_none</span>
+<span class="font-label-md text-label-md">Assistant</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-md py-xs">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</div>
+</nav>
+<script>
+        // Simple micro-interaction for checklist
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const text = this.nextElementSibling;
+                if(this.checked) {
+                    text.classList.add('line-through', 'opacity-50');
+                } else {
+                    text.classList.remove('line-through', 'opacity-50');
+                }
+            });
+        });
+    </script>
+</body></html>

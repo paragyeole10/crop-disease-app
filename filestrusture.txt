@@ -1,0 +1,76 @@
+========================================================================
+                      AGRIVISION AI - FILE STRUCTURE
+========================================================================
+
+Below is the directory tree and description of all files in the 
+AgriVision AI project workspace.
+
+d:/Crop_app
+├── DESIGN.md                   # Brand, style, typography, and UI specs
+├── JUDGE_GUIDE.md              # System data flow and Judge Q&A answers
+├── PRD.md                      # Product Requirements Document
+├── TECHSTACK.md                # System technical stack specifications
+├── README.md                   # Core system overview (IEEE Format)
+├── notes.txt                   # Local running and deployment guides
+├── filestructure.txt           # File structure map
+├── filestrusture.txt           # File structure map (this file)
+├── mobilenet_crop_disease.keras # Trained TensorFlow model (22.1 MB)
+│
+├── backend/                     # FASTAPI BACKEND APP
+│   ├── .env                    # Local environment config (credentials, ports)
+│   ├── .env.example            # Environment variables template
+│   ├── disease_data.py         # Localized database of crop diseases
+│   ├── main.py                 # FastAPI application routes & ML inference
+│   ├── requirements.txt        # Python dependency manifest
+│   ├── test_api.py             # Integration test script for the endpoints
+│   └── venv/                   # Python Virtual Environment folder (ignored)
+│
+└── mobile/                     # REACT NATIVE + EXPO APP
+    ├── .env                    # Frontend environment configurations
+    ├── .env.example            # Frontend environment variables template
+    ├── App.js                  # Main app navigation and provider container
+    ├── app.json                # Expo config (bundle identifiers, assets)
+    ├── package.json            # NPM dependencies list
+    ├── package-lock.json       # Locked NPM dependency graph
+    │
+    ├── assets/                 # Brand assets & application icons
+    │   ├── android-icon-background.png
+    │   ├── android-icon-foreground.png
+    │   ├── android-icon-monochrome.png
+    │   ├── favicon.png
+    │   ├── icon.png            # Main application launcher icon
+    │   └── splash-icon.png     # Splash screen icon
+    │
+    ├── components/             # Reusable UI Components
+    │   └── SidebarDrawer.js    # Sidebar navigation drawer component
+    │
+    ├── constants/              # System Constants & Context Providers
+    │   ├── LanguageContext.js  # App-wide localization provider & dictionary
+    │   ├── Theme.js            # Custom color schemes matching the PRD
+    │   └── ThemeContext.js     # Light/Dark mode state management provider
+    │
+    ├── services/               # API & Integrations Layer
+    │   ├── api.js              # Connection client for the FastAPI backend
+    │   ├── firebase.js         # Firebase Auth client setup
+    │   ├── marketplaceData.js  # Vendor and product mock databases
+    │   └── supabase.js         # Supabase client setup (Prediction logs)
+    │
+    └── screens/                # Mobile Application Views
+        ├── WelcomeScreen.js    # Splash welcome screen
+        ├── LoginScreen.js      # User registration & authentication screen
+        ├── DashboardScreen.js  # Core home dashboard showing crop tips
+        ├── ScanScreen.js       # Live camera viewfinder & photo select view
+        ├── AnalysisScreen.js   # Diagnostic reports, recommendations, & audio
+        ├── HistoryScreen.js    # Logs of previous disease scan records
+        ├── LibraryScreen.js    # Encyclopedia of crops & diseases
+        ├── AssistantScreen.js  # Chat interface with the Gemini agricultural bot
+        ├── MarketplaceHomeScreen.js # Storefront interface for seed/fungicides
+        ├── ProductListingScreen.js # Filters & category product listings
+        ├── ProductDetailsScreen.js # Buy details, specifications, & cart logic
+        ├── CartScreen.js       # User checkout list
+        ├── OrderTrackingScreen.js # Order tracking & step-by-step progress
+        ├── NearbyStoresScreen.js # Maps & geo-location of local agro-vet shops
+        ├── VendorProfileScreen.js # Profile detail page of registered vendors
+        └── ProfileScreen.js    # User settings and profile controls
+
+========================================================================

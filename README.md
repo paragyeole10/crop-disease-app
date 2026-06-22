@@ -132,7 +132,24 @@ Retains past diagnostic data locally (via SecureStore/AsyncStorage) and in the c
 
 ---
 
-## VI. Deep Learning Classification Model
+## VI. Application Screenshot Gallery
+Here is a visual overview of the AgriVision AI mobile application:
+
+| Welcome & Authentication | Dashboard Home | Camera Scanner |
+| :---: | :---: | :---: |
+| ![Welcome Screen](mobile/assets/screenshots/welcome.png) | ![Dashboard Screen](mobile/assets/screenshots/dashboard.png) | ![Scan Screen](mobile/assets/screenshots/scan.png) |
+
+| Disease Analysis | History Logs | Voice Assistant |
+| :---: | :---: | :---: |
+| ![Analysis Screen](mobile/assets/screenshots/analysis.png) | ![History Screen](mobile/assets/screenshots/history.png) | ![Assistant Screen](mobile/assets/screenshots/assistant.png) |
+
+| Marketplace Store | Product Details | Order Tracking |
+| :---: | :---: | :---: |
+| ![Marketplace Screen](mobile/assets/screenshots/marketplace.png) | ![Product Details](mobile/assets/screenshots/details.png) | ![Order Tracking](mobile/assets/screenshots/tracking.png) |
+
+---
+
+## VII. Deep Learning Classification Model
 The primary ML system consists of a Convolutional Neural Network (CNN) fine-tuned using Transfer Learning.
 
 ### A. Model Selection: MobileNetV2
@@ -173,7 +190,7 @@ The system is trained and configured to diagnose the following 17 distinct class
 
 ---
 
-## VII. API Specifications & Endpoints
+## VIII. API Specifications & Endpoints
 The backend exposes RESTful endpoints, documented automatically via Swagger UI.
 
 ### 1. Predict Disease
@@ -230,7 +247,7 @@ The backend exposes RESTful endpoints, documented automatically via Swagger UI.
 
 ---
 
-## VIII. Security & Performance Verification
+## IX. Security & Performance Verification
 
 ### A. Security Protocols
 1. **Inference Protection:** Implemented using `SlowAPI` to prevent DoS attacks on `/api/v1/predict` (rate limited to 20 requests per minute).
@@ -245,7 +262,7 @@ The backend exposes RESTful endpoints, documented automatically via Swagger UI.
 
 ---
 
-## IX. Implementation Roadmap & Milestones
+## X. Implementation Roadmap & Milestones
 
 ```text
 ┌────────────────────────┐      ┌────────────────────────┐      ┌────────────────────────┐
@@ -269,7 +286,7 @@ The backend exposes RESTful endpoints, documented automatically via Swagger UI.
 
 ---
 
-## X. Conclusion
+## XI. Conclusion
 AgriVision AI demonstrates a scalable and accessible approach to crop disease management. By leveraging MobileNetV2 for low-latency image classification and integrating multilingual translation and voice services, the platform addresses both the diagnostic and accessibility challenges faced by smallholder farmers. The current 87% prediction accuracy and robust client-server design establish a strong foundation for future upgrades, including explainable AI models and localized micro-service features.
 
 ---

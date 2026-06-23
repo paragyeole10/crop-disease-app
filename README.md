@@ -137,7 +137,7 @@ Here is a visual overview of the AgriVision AI mobile application:
 
 | Welcome & Authentication | Dashboard Home | Camera Scanner |
 | :---: | :---: | :---: |
-| ![Welcome Screen](mobile/assets/screenshots/welcome.png) | ![Dashboard Screen](mobile/assets/screenshots/dashboard.png) | ![Scan Screen](mobile/assets/screenshots/scan.png) |
+| ![Welcome Screen](mobile\assets\Authentication_Screen.png) | ![Dashboard Screen](mobile\assets\Dashboard_Screen.png) | ![Scan Screen](mobile/assets/screenshots/scan.png) |
 
 | Disease Analysis | History Logs | Voice Assistant |
 | :---: | :---: | :---: |
